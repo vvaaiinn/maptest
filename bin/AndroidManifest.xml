@@ -19,6 +19,14 @@
 		</activity>
 		<activity android:name=".mapshow" android:label="showmap">
 		</activity>
+		<activity android:name=".PoiSearchDemo" android:label="showmap">
+		</activity>
+		<activity android:name=".RoutePlanDemo" android:label="showmap">
+		</activity>
+		<activity android:name=".BusLineSearchDemo" android:label="showmap">
+		</activity>
+		<activity android:name=".OfflineDemo" android:label="showmap">
+		</activity>
 	</application>
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	<uses-permission android:name="android.permission.USE_CREDENTIALS" />

@@ -78,6 +78,42 @@ OnGetGeoCoderResultListener{
 				showView(flag);				
 			}
 		 });
+         two.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				flag = 1;
+				showView(flag);
+			}
+		});
+         three.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				flag = 2 ;
+				showView(flag);
+			}
+		});
+         four.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				flag = 3;
+				showView(flag);
+			}
+		});
+         five.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				flag = 4;
+				showView(flag);
+			}
+		});
      }     
     public void initMainView() {
 		
@@ -140,7 +176,32 @@ OnGetGeoCoderResultListener{
 //					intent1)	
 //					.getDecorView());
     		
+    	case 1:
+			bodyView.removeAllViews();
+			Intent intent1 = new Intent(MainActivity.this, PoiSearchDemo.class);
+			bodyView.addView(getLocalActivityManager().startActivity("two",
+					intent1).getDecorView());
+
+			break;
+    	case 2:
+    		bodyView.removeAllViews();
+    		Intent intent2 = new Intent(MainActivity.this,RoutePlanDemo.class);
+    		bodyView.addView(getLocalActivityManager().startActivity("three", intent2).getDecorView());
+    		break;
+    	case 3:
+    		bodyView.removeAllViews();
+    		Intent intent3 = new Intent(MainActivity.this,BusLineSearchDemo.class);
+    		bodyView.addView(getLocalActivityManager().startActivity("four", intent3).getDecorView());
+    		break;
+    	case 4:
+    		bodyView.removeAllViews();
+    		Intent intent4 = new Intent(MainActivity.this,OfflineDemo.class);
+    		bodyView.addView(getLocalActivityManager().startActivity("five", intent4).getDecorView());
+    		break;
+    	default:
+    		break;
     	}
+    	
     }
     @Override  
     protected void onDestroy() {  
