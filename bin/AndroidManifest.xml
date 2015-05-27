@@ -5,11 +5,17 @@
 
 	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="21" />
 
-	<application android:allowBackup="true" android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name" android:theme="@style/AppTheme">
+	<application 
+	android:name="com.example.testmap.MyApplication"
+	android:allowBackup="true" 
+	android:icon="@drawable/ic_launcher"
+	android:label="@string/app_name" 
+	android:theme="@style/AppTheme">
+
 
 		<meta-data android:name="com.baidu.lbsapi.API_KEY"
 			android:value="l84vqoas4sjsQNa5mDwZIVxu" />
+			
 		<activity android:name=".MainActivity" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -19,7 +25,7 @@
 		</activity>
 		<activity android:name=".mapshow" android:label="showmap">
 		</activity>
-		<activity android:name=".PoiSearchDemo" android:label="showmap">
+		<activity android:name=".PoiSearchActivity" android:label="showmap">
 		</activity>
 		<activity android:name=".RoutePlanDemo" android:label="showmap">
 		</activity>
@@ -27,6 +33,17 @@
 		</activity>
 		<activity android:name=".OfflineDemo" android:label="showmap">
 		</activity>
+		
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" >
+                </action>
+            </intent-filter>
+        </service>
+		
 	</application>
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -41,5 +58,33 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.BROADCAST_STICKY" />
 	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
+	<permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
+	
+	
+	
+	 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_LOGS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+	
+    </permission>
+ 
 </manifest>
