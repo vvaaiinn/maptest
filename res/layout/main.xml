@@ -36,7 +36,7 @@
 			           android:layout_marginTop="4dp"/>
 			<TextView android:layout_width="wrap_content"
 				      android:layout_height="18dp" 
-				      android:text="地图查看"
+				      android:text="实时定位"
 				      android:textSize="12dip"
 				      android:textColor="@color/white"
 				      android:layout_marginBottom="8dp"
@@ -99,34 +99,13 @@
 			   />
 			<TextView android:layout_width="wrap_content"
 				     android:layout_height="18dp" 
-				     android:text="公交查询"
+				     android:text="帮助信息"
 				     android:textSize="12dip"
 				     android:textColor="@color/white"
 				     android:layout_marginBottom="8dp"
 				/>
 		</LinearLayout>
-		
-				<LinearLayout 
-			         android:orientation="vertical" 
-			         android:layout_width="wrap_content"
-			         android:id="@+id/five" 
-			         android:layout_height="fill_parent"
-			         android:layout_weight="5" 
-			         android:gravity="center_horizontal">
-			<ImageView android:background="@drawable/news" 
-			         android:layout_gravity="top|center" 
-			         android:layout_height="35dp" 
-			         android:layout_width="32dp" 
-			         android:layout_marginTop="4dp"
-			   />
-			<TextView android:layout_width="wrap_content"
-				     android:layout_height="18dp" 
-				     android:text="离线地图"
-				     android:textSize="12dip"
-				     android:textColor="@color/white"
-				     android:layout_marginBottom="8dp"
-				/>
-		</LinearLayout>
+	
 		
 	</LinearLayout>
 </LinearLayout>

@@ -36,7 +36,7 @@ public class MainActivity extends ActivityGroup
 	GeoCoder mSearch = null;
 	EditText editCity = null;
 	EditText editAdd = null;
-	private LinearLayout one, two, three, four, five;
+	private LinearLayout one, two, three, four;
 	private LinearLayout bodyView;
 	private int flag = 0;
 	String city = null;
@@ -114,15 +114,7 @@ public class MainActivity extends ActivityGroup
 				showView(flag);
 			}
 		});
-		five.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO 自动生成的方法存根
-				flag = 4;
-				showView(flag);
-			}
-		});
 	}
 
 	public void initMainView() {
@@ -132,7 +124,7 @@ public class MainActivity extends ActivityGroup
 		two = (LinearLayout) findViewById(R.id.two);
 		three = (LinearLayout) findViewById(R.id.three);
 		four = (LinearLayout) findViewById(R.id.four);
-		five = (LinearLayout) findViewById(R.id.five);
+
 	}
 
 	public void showView(int flag) {
@@ -197,30 +189,27 @@ public class MainActivity extends ActivityGroup
 
 		case 1:
 			bodyView.removeAllViews();
-			Intent intent1 = new Intent(MainActivity.this, PoiSearchActivity.class);
+			Intent intent1 = new Intent(MainActivity.this,
+					PoiSearchActivity.class);
 			bodyView.addView(getLocalActivityManager().startActivity("two",
 					intent1).getDecorView());
 
 			break;
 		case 2:
 			bodyView.removeAllViews();
-			Intent intent2 = new Intent(MainActivity.this, RoutePlanDemo.class);
+			Intent intent2 = new Intent(MainActivity.this,
+					RoutePlanActivity.class);
 			bodyView.addView(getLocalActivityManager().startActivity("three",
 					intent2).getDecorView());
 			break;
 		case 3:
-			bodyView.removeAllViews();
-			Intent intent3 = new Intent(MainActivity.this,
-					BusLineSearchDemo.class);
-			bodyView.addView(getLocalActivityManager().startActivity("four",
-					intent3).getDecorView());
+			// bodyView.removeAllViews();
+			// Intent intent3 = new Intent(MainActivity.this,
+			// BusLineSearchDemo.class);
+			// bodyView.addView(getLocalActivityManager().startActivity("four",
+			// intent3).getDecorView());
 			break;
-		case 4:
-			bodyView.removeAllViews();
-			Intent intent4 = new Intent(MainActivity.this, OfflineDemo.class);
-			bodyView.addView(getLocalActivityManager().startActivity("five",
-					intent4).getDecorView());
-			break;
+
 		default:
 			break;
 		}

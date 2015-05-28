@@ -1,17 +1,23 @@
 package com.example.testmap;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -28,79 +34,98 @@ import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
 import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiDetailSearchOption;
+import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
-import com.baidu.mapapi.search.sug.SuggestionSearch;
-import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 
 public class PoiSearchActivity extends FragmentActivity implements
 		OnGetPoiSearchResultListener, OnGetSuggestionResultListener {
 	private BroadcastReceiver broadcastReceiver;
 	public static String LOCATION_BCR = "location_bcr";
 	Double lat = null;
-	Double lon = null;
-	LatLng p = null;
+	Double lon = null;// 经纬度
+	LatLng p = null;// 坐标
+	String add = null;// 地址
 
+	ListView lv = null;// listview的名称
+	Button listBtn = null;// detail的按钮
+	View fr = null;
+	private int type = 0;
 	private PoiSearch mPoiSearch = null;
-	private SuggestionSearch mSuggestionSearch = null;
 	private BaiduMap mBaiduMap = null;
+	EditText editSearchKey = null;
+	EditText editCity = null;
+
 	/**
 	 * 搜索关键字输入窗口
 	 */
-	private AutoCompleteTextView keyWorldsView = null;
-	private ArrayAdapter<String> sugAdapter = null;
-	private int load_Index = 0;
+	private AutoCompleteTextView KWspot = null;// 场所名字
+	private ArrayAdapter<String> spotAdapter = null;// 自动补全的adapter
+	private int Index = 0;
+	public ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
+	public SimpleAdapter adapter = null; // 详细信息显示的adapter
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_poisearch);
+		setContentView(R.layout.poisearch);
 		// 初始化搜索模块，注册搜索事件监听
 		mPoiSearch = PoiSearch.newInstance();
 		mPoiSearch.setOnGetPoiSearchResultListener(this);
-		mSuggestionSearch = SuggestionSearch.newInstance();
-		mSuggestionSearch.setOnGetSuggestionResultListener(this);
-		keyWorldsView = (AutoCompleteTextView) findViewById(R.id.searchkey);
-		sugAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line);
-		keyWorldsView.setAdapter(sugAdapter);
+
+		KWspot = (AutoCompleteTextView) findViewById(R.id.searchkey);
+		String[] autoStrings = new String[] { "酒店", "饭店", "麦当劳", "健身中心", "网吧",
+				"超市", "水果店", "火锅", "自助", "酒吧" };
+		spotAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, autoStrings);
+		KWspot.setAdapter(spotAdapter);
+		KWspot.setThreshold(1);
+
+		lv = (ListView) findViewById(R.id.listView);
+		listBtn = (Button) findViewById(R.id.listbtn);
+		fr = (View) findViewById(R.id.map);
+		editCity = (EditText) findViewById(R.id.city);
+		editSearchKey = (EditText) findViewById(R.id.searchkey);
+
 		mBaiduMap = ((SupportMapFragment) (getSupportFragmentManager()
 				.findFragmentById(R.id.map))).getBaiduMap();
+
 		registerBroadCastReceiver();
 		MyApplication.getInstance().requestLocationInfo();
 
-		/**
-		 * 当输入关键字变化时，动态更新建议列表
-		 */
-		keyWorldsView.addTextChangedListener(new TextWatcher() {
-
+		listBtn.setOnClickListener(new OnClickListener() {
 			@Override
-			public void afterTextChanged(Editable arg0) {
-
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				if (adapter != null) {
+					fr.setVisibility(View.GONE);
+					lv.setAdapter(adapter);
+					lv.setVisibility(View.VISIBLE);
+				} else
+					Toast.makeText(PoiSearchActivity.this, "请选择查询",
+							Toast.LENGTH_LONG).show();
 			}
+		});
+		editCity.setOnFocusChangeListener(new OnFocusChangeListener() {
 
 			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1,
-					int arg2, int arg3) {
-
-			}
-
-			@Override
-			public void onTextChanged(CharSequence cs, int arg1, int arg2,
-					int arg3) {
-				if (cs.length() <= 0) {
-					return;
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO 自动生成的方法存根
+				if (hasFocus) {
+					editCity.setText("");
 				}
-				String city = ((EditText) findViewById(R.id.city)).getText()
-						.toString();
-				/**
-				 * 使用建议搜索服务获取建议列表，结果在onSuggestionResult()中更新
-				 */
-				mSuggestionSearch
-						.requestSuggestion((new SuggestionSearchOption())
-								.keyword(cs.toString()).city(city));
+			}
+		});
+		editSearchKey.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO 自动生成的方法存根
+				if (hasFocus) {
+					editSearchKey.setText("");
+				}
 			}
 		});
 
@@ -119,7 +144,6 @@ public class PoiSearchActivity extends FragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		mPoiSearch.destroy();
-		mSuggestionSearch.destroy();
 		super.onDestroy();
 	}
 
@@ -133,23 +157,35 @@ public class PoiSearchActivity extends FragmentActivity implements
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
-	/**
-	 * 影响搜索按钮点击事件
-	 * 
-	 * @param v
-	 */
 	public void searchButtonProcess(View v) {
-		EditText editCity = (EditText) findViewById(R.id.city);
-		EditText editSearchKey = (EditText) findViewById(R.id.searchkey);
+
+		lv.setVisibility(View.GONE);
+		fr.setVisibility(View.VISIBLE);
+		mPoiSearch.searchNearby((new PoiNearbySearchOption()).location(p)
+				.keyword(editSearchKey.getText().toString()).radius(10000)
+				.pageNum(Index));
+		type = 0;
+	}
+
+	public void searchButtonProcess1(View v) {
+		lv.setVisibility(View.GONE);
+		fr.setVisibility(View.VISIBLE);
+
 		mPoiSearch.searchInCity((new PoiCitySearchOption())
 				.city(editCity.getText().toString())
-				.keyword(editSearchKey.getText().toString())
-				.pageNum(load_Index));
+				.keyword(editSearchKey.getText().toString()).pageNum(Index));
+		type = 1;
 	}
 
 	public void goToNextPage(View v) {
-		load_Index++;
-		searchButtonProcess(null);
+		Index++;
+		if (type == 0) {
+			searchButtonProcess(null);
+			adapter.notifyDataSetChanged();
+		} else {
+			searchButtonProcess1(null);
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 	public void onGetPoiResult(PoiResult result) {
@@ -161,9 +197,33 @@ public class PoiSearchActivity extends FragmentActivity implements
 		}
 		if (result.error == SearchResult.ERRORNO.NO_ERROR) {
 			mBaiduMap.clear();
+			arrayList.clear();
 			PoiOverlay overlay = new MyPoiOverlay(mBaiduMap);
 			mBaiduMap.setOnMarkerClickListener(overlay);
 			overlay.setData(result);
+			// System.out.println(result.getTotalPoiNum());
+			// System.out
+			// .println(overlay.getPoiResult().getAllPoi().get(5).address
+			// .toString());
+			for (int i = 0; i < 10; i++) {
+				HashMap<String, String> temp = new HashMap<String, String>();
+				temp.put("name", overlay.getPoiResult().getAllPoi().get(i).name
+						.toString());
+				temp.put("detail",
+						overlay.getPoiResult().getAllPoi().get(i).address
+								.toString());
+				temp.put("phone",
+						overlay.getPoiResult().getAllPoi().get(i).phoneNum
+								.toString());
+				arrayList.add(temp);
+			}
+			adapter = new SimpleAdapter(this, arrayList, R.layout.spotinfo,
+					new String[] { "name", "detail", "phone" }, new int[] {
+							R.id.name, R.id.detail, R.id.phone });
+
+			mBaiduMap.addOverlay(new MarkerOptions().position(p)
+					.icon(BitmapDescriptorFactory
+							.fromResource(R.drawable.icon_marka)));
 			overlay.addToMap();
 			overlay.zoomToSpan();
 			return;
@@ -198,16 +258,15 @@ public class PoiSearchActivity extends FragmentActivity implements
 		if (res == null || res.getAllSuggestions() == null) {
 			return;
 		}
-		sugAdapter.clear();
+		spotAdapter.clear();
 		for (SuggestionResult.SuggestionInfo info : res.getAllSuggestions()) {
 			if (info.key != null)
-				sugAdapter.add(info.key);
+				spotAdapter.add(info.key);
 		}
-		sugAdapter.notifyDataSetChanged();
+		spotAdapter.notifyDataSetChanged();
 	}
 
 	private class MyPoiOverlay extends PoiOverlay {
-
 		public MyPoiOverlay(BaiduMap baiduMap) {
 			super(baiduMap);
 		}
@@ -216,10 +275,8 @@ public class PoiSearchActivity extends FragmentActivity implements
 		public boolean onPoiClick(int index) {
 			super.onPoiClick(index);
 			PoiInfo poi = getPoiResult().getAllPoi().get(index);
-			// if (poi.hasCaterDetails) {
 			mPoiSearch.searchPoiDetail((new PoiDetailSearchOption())
 					.poiUid(poi.uid));
-			// }
 			return true;
 		}
 	}
@@ -230,9 +287,9 @@ public class PoiSearchActivity extends FragmentActivity implements
 			public void onReceive(Context context, Intent intent) {
 				lat = intent.getDoubleExtra("latitude", -1);
 				lon = intent.getDoubleExtra("longitude", -1);
-				String add = intent.getStringExtra("add");
-				Toast.makeText(PoiSearchActivity.this, add.toString(),
-						Toast.LENGTH_LONG).show();
+				add = intent.getStringExtra("add");
+				// Toast.makeText(PoiSearchActivity.this, add.toString(),
+				// Toast.LENGTH_LONG).show();
 				p = new LatLng(lat, lon);
 				mBaiduMap.clear();
 				mBaiduMap.addOverlay(new MarkerOptions().position(p).icon(
