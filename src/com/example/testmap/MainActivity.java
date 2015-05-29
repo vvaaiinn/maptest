@@ -203,11 +203,10 @@ public class MainActivity extends ActivityGroup
 					intent2).getDecorView());
 			break;
 		case 3:
-			// bodyView.removeAllViews();
-			// Intent intent3 = new Intent(MainActivity.this,
-			// BusLineSearchDemo.class);
-			// bodyView.addView(getLocalActivityManager().startActivity("four",
-			// intent3).getDecorView());
+			bodyView.removeAllViews();
+			Intent intent3 = new Intent(MainActivity.this, HelpActivity.class);
+			bodyView.addView(getLocalActivityManager().startActivity("four",
+					intent3).getDecorView());
 			break;
 
 		default:

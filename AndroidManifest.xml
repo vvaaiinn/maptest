@@ -23,7 +23,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".mapshow" android:label="showmap">
+		<activity android:name=".HelpActivity" android:label="showmap">
 		</activity>
 		<activity android:name=".PoiSearchActivity" android:label="showmap">
 		</activity>
