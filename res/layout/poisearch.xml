@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+ <RelativeLayout    
+       android:layout_marginTop = "5dip"
+       android:layout_marginLeft= "5dip"
+       android:layout_width = "match_parent"
+       android:layout_height = "50dip"
+     > 
+    <TextView
+        	android:id="@+id/tv1"
+        	android:layout_marginTop = "5dip"
+        	android:layout_marginLeft= "5dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize = "20dip"            
+            android:text="城市: " >
+     </TextView>
+
+    <EditText
+        android:id="@+id/city"
+        android:layout_width="100dip"
+        android:layout_height="40dip"
+        android:layout_toRightOf="@+id/tv1"
+        android:ems="10"
+        android:text="大连"
+        android:textSize="20dip" >
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="100dip"
+        android:layout_height="50dip"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/search1"
+        android:onClick="searchButtonProcess"
+        android:padding="10dip"
+        android:text="附近搜索" />
+    <Button
+        android:id="@+id/search1"
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="searchButtonProcess1"
+        android:padding="10dip"
+        android:text="市内搜索" />
+
+
+    
+    </RelativeLayout>  
+   
+
+ <RelativeLayout    
+       
+       android:layout_marginLeft= "5dip"
+       android:layout_width = "match_parent"
+       android:layout_height = "50dip"
+     > 
+      <TextView
+        	android:id="@+id/tv2"       
+        	android:layout_marginTop= "5dip"	
+        	android:layout_marginLeft= "5dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize = "20dip"            
+            android:text="场所: " >
+     </TextView>
+
+     <AutoCompleteTextView
+         android:id="@+id/searchkey"
+         android:layout_width="80dip"
+         android:layout_height="40dip"
+         android:layout_marginTop="5dip"
+         android:layout_toRightOf="@+id/tv2"
+         android:ems="10"
+         android:text="超市"
+         android:textSize="20dip" />
+
+     <Button
+         android:id="@+id/listbtn"
+         android:layout_width="100dip"
+         android:layout_height="50dip"
+         android:layout_alignBaseline="@+id/map_next_data"
+         android:layout_alignBottom="@+id/map_next_data"
+         android:layout_alignParentRight="true"
+         android:padding="10dip"
+         android:text="列表" />
+
+     <Button
+         android:id="@+id/map_next_data"
+         android:layout_width="100dip"
+         android:layout_height="50dip"
+         android:layout_alignParentBottom="true"
+         android:layout_toLeftOf="@+id/listbtn"
+         android:onClick="goToNextPage"
+         android:padding="10dip"
+         android:text="下一组" />
+
+ </RelativeLayout>  
+ <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" 
+        class="com.baidu.mapapi.map.SupportMapFragment"
+         />
+  <ListView  
+    android:id="@+id/listView"  
+    android:layout_width="wrap_content"  
+    android:layout_height="wrap_content"  
+    android:visibility="gone" 
+    />  
+ 
+ 
+</LinearLayout>

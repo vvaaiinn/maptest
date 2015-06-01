@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="#FFFFFF"
+	android:id="@+id/pp">
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:text="实时定位" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_weight="5" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_toRightOf="@+id/btn1"
+        android:text="地图搜索" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_weight="5" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_toRightOf="@+id/btn2"
+        android:text="路线规划" />
+
+    <Button
+        android:id="@+id/btn4"
+        android:layout_weight="5" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_toRightOf="@+id/btn3"        
+        android:text="作者" />
+    
+     <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btn1"
+        android:gravity="center"
+        android:text="点击按钮查看使用帮助" />
+
+</RelativeLayout>

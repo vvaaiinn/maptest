@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+   <RelativeLayout    
+       android:layout_marginTop = "5dip"
+       android:layout_marginLeft= "5dip"
+       android:layout_width = "match_parent"
+       android:layout_height = "50dip"
+       >
+       <TextView
+            android:id="@+id/textView1"
+            android:layout_marginTop = "5dip"
+        	android:layout_marginLeft= "5dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize = "20dip"  
+            android:text="起点：" />
+
+        <EditText
+            android:id="@+id/start"
+            android:layout_width="100dip"
+       	    android:layout_height="40dip"
+       	    android:layout_toRightOf="@id/textView1"
+            android:ems="10"
+            android:text="我的位置" >
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/drive"
+            android:layout_width="60dip"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/start"
+            android:layout_weight="1.0"
+            android:onClick="SearchButtonProcess"
+            android:text="驾车" />
+
+        <Button
+            android:id="@+id/walk"
+            android:layout_width="60dip"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1.0"
+            android:layout_toRightOf="@+id/drive"
+            android:onClick="SearchButtonProcess"
+            android:text="步行" />
+         <Button
+             android:id="@+id/transit"
+             android:layout_width="60dip"
+             android:layout_height="fill_parent"
+             android:layout_toRightOf="@id/walk"
+             android:layout_alignParentBottom="true"
+             android:layout_weight="1.0"
+             android:onClick="SearchButtonProcess"
+             android:text="公交" />
+
+    </RelativeLayout>
+
+    <RelativeLayout          
+       android:layout_marginLeft= "5dip"
+       android:layout_width = "match_parent"
+       android:layout_height = "50dip" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_marginTop= "5dip"	
+        	android:layout_marginLeft= "5dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize = "20dip"       
+            android:text="终点：" />
+
+        <EditText
+            android:id = "@+id/end"
+            android:layout_width="80dip"
+            android:layout_height="40dip"
+            android:layout_marginTop="5dip"
+            android:layout_toRightOf="@id/textView2"
+            android:ems="10"
+            android:text="天安门" >
+
+            <requestFocus />
+            </EditText>
+        <Button
+            android:id = "@+id/listbtn"
+            android:layout_width = "match_parent"
+            android:layout_height = "fill_parent"
+            android:layout_toRightOf="@id/end"
+            android:layout_marginLeft="5dip"
+            android:text = "详细信息"
+           />
+
+        
+
+    </RelativeLayout>
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/map"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true" />
+   <ListView  
+    android:id="@+id/listView"  
+    android:layout_width="wrap_content"  
+    android:layout_height="wrap_content"  
+    android:visibility="gone" 
+    />  
+
+
+</LinearLayout>
